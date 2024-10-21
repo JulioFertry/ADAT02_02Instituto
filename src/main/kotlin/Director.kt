@@ -12,8 +12,8 @@ data class Director(
     @Column(name = "Telefono", nullable = true)
     val telefono: String?,
 
-    @OneToOne(mappedBy = "director")
-    val instituto: Instituto,
+    @OneToOne(mappedBy = "director", cascade = [CascadeType.ALL])
+    var instituto: Instituto?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

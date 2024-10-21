@@ -3,12 +3,12 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "Departamento")
 data class Departamento(
-    @Column(nullable = false)
+    @Column(name = "Nombre", nullable = false, length = 50)
     val nombre: String,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "id_instituto")
-    val instituto: Instituto,
+    var instituto: Instituto?,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

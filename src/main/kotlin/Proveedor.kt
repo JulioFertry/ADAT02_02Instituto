@@ -1,16 +1,13 @@
 import jakarta.persistence.*
 
+@Entity
+@Table(name = "Proveedor")
 data class Proveedor(
     @Column(nullable = false)
     val nombre: String,
 
-    @ManyToMany
-    @JoinTable(
-        name = "proveedor_instituto",
-        joinColumns = [JoinColumn(name="id_proveedor")],
-        inverseJoinColumns = [JoinColumn(name = "id_instituto")]
-    )
-    val instituto: MutableList<Instituto> = mutableListOf(),
+    @ManyToMany(mappedBy = "proveedores", cascade = [CascadeType.ALL])
+    var institutos: MutableList<Instituto>? = mutableListOf(),
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

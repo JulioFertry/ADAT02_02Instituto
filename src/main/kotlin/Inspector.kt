@@ -9,11 +9,11 @@ data class Inspector(
     @Column(name = "Apellido", nullable = true, length = 100)
     val apellido: String?,
 
-    @Column(name = "DNI", nullable = false, length = 9)
+    @Column(name = "DNI", nullable = false, length = 9, unique = true)
     val dni: String,
 
-    @OneToMany(mappedBy = "inspector")
-    val institutos: MutableList<Instituto> = mutableListOf(),
+    @OneToMany(cascade = [CascadeType.ALL])
+    var institutos: MutableList<Instituto>? = mutableListOf(),
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

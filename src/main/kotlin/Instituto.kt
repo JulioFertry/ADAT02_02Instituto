@@ -3,6 +3,9 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "Instituto")
 data class Instituto(
+    @Column(name = "Nombre", nullable = false, length = 50)
+    val nombre: String,
+
     @OneToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "id_director")
     val director: Director,
@@ -11,13 +14,18 @@ data class Instituto(
     @JoinColumn(name = "id_inspector")
     val inspector: Inspector?,
 
-    @Column(name = "Proveedores")
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "instituto_proveedor",
+        joinColumns = [JoinColumn(name = "id_instituto")],
+        inverseJoinColumns = [JoinColumn(name = "id_proveedor")]
+    )
     val proveedores: MutableList<Proveedor>? = mutableListOf(),
 
-    @OneToMany(mappedBy = "dpto", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "instituto", cascade = [CascadeType.ALL])
     val departamentos: List<Departamento>? = mutableListOf(),
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long?
 )
